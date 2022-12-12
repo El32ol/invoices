@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-	الاقسام
+برنامج الفواتير - الاقسام
 @stop
 @section('css')
 <!-- Internal Data table css -->
@@ -36,6 +36,7 @@
 	@include('_partial.error')
 	@include('_partial.add')
 	@include('_partial.edit')
+	@include('_partial.delete')
 
 				<!-- row -->
 				<div class="col-xl-12">
@@ -85,6 +86,7 @@
 						</div>
 					</div>
 
+                    <!-- start Basic modal -->
 		                 <div class="modal" id="modaldemo8">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content modal-content-demo">
@@ -173,8 +175,8 @@
                                         <input class="form-control" name="section_name" id="section_name" type="text" readonly>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
                                         <button type="submit" class="btn btn-danger">تاكيد</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
                                     </div>
                             </div>
                             </form>

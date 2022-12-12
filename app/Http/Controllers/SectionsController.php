@@ -42,7 +42,7 @@ class SectionsController extends Controller
     {
 
         // dd($request->all());
-        $sections = $request->all();
+        // $sections = $request->all();
        
             
             sections::create($request->all() );
