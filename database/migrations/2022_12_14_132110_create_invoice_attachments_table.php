@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('invoice_attachments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('section_name', 999);
-            $table->text('description')->nullable();
-            $table->string('created_by', 999);
+            $table->string('file_name', 999);
+            $table->string('invoice_number', 50);
+            $table->string('Created_by', 999);
+            $table->unsignedBigInteger('invoice_id')->nullable();
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('invoice_attachments');
     }
 };
