@@ -56,21 +56,39 @@
 										</thead>
 										<tbody>
 											<tr>
+											@php
+												$i = 0;
+											@endphp
 										@foreach ($invoices as $invoice)
-												<td>{{$invoice -> id}}</td>
+										@php
+											$i++;
+										@endphp
+												<td>{{$i}}</td>
 												<td>{{$invoice ->invoice_number}}</td>
-												<td>{{$invoice ->invoice_data}}</td>
-												<td>{{$invoice ->due_data}}</td>
+												<td>{{$invoice ->invoice_Date}}</td>
+												<td>{{$invoice ->Due_date}}</td>
 												<td>{{$invoice ->product}}</td>
-												<td>{{$invoice ->section}}</td>
-												<td>{{$invoice ->discount}}</td>
-												<td>{{$invoice ->rat_vat}}</td>
-												<td>{{$invoice ->value_vat}}</td>
-												<td>{{$invoice ->total}}</td>
-												<td>{{$invoice ->value_status}}</td>
-												<td>{{$invoice ->status}}</td>
-											@endforeach
+												<td>
+													<a href={{ route('detailinvoices' , $invoice->id)}}>
+													{{$invoice ->section->section_name}}
+													</a>
+												</td>
+												<td>{{$invoice ->Discount}}</td>
+												<td>{{$invoice ->Value_VAT}}</td>
+												<td>{{$invoice ->Rate_VAT}}</td>
+												<td>{{$invoice ->Total}}</td>
+												<td>
+													@if ($invoice ->Value_Status == 1)
+														<span class = "text-success"> {{$invoice ->Status}} </span>
+													@elseif($invoice ->Value_Status == 2)
+														<span class = "text-danger"> {{$invoice ->Status}} </span>
+													@else 
+														<span class = "text-warning"> {{$invoice ->Status}} </span>
+													@endif
+												</td>
+												<td>{{$invoice ->note}}</td>
 											</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>

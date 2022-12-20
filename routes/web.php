@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvoiceDetailsController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SectionsController;
+use App\Models\invoice_details;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,5 +30,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('invoices', InvoicesController::class);
 Route::resource('sections', SectionsController::class);
 Route::resource('products', ProductController::class);
-
+Route::get('/section/{id}', [InvoicesController::class ,'getProduct']);
 Route::get('/{page}', [AdminController::class ,'index']);
+
+Route::get('detailinvoices/{id}', [InvoiceDetailsController::class ,'edit'])->name('detailinvoices');

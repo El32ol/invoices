@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\invoice_attachments;
 use App\Models\invoice_details;
+use App\Models\invoices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceDetailsController extends Controller
 {
@@ -14,7 +17,8 @@ class InvoiceDetailsController extends Controller
      */
     public function index()
     {
-        //
+        
+       //
     }
 
     /**
@@ -55,11 +59,13 @@ class InvoiceDetailsController extends Controller
      * @param  \App\Models\invoice_details  $invoice_details
      * @return \Illuminate\Http\Response
      */
-    public function edit(invoice_details $invoice_details)
+    public function edit($id)
     {
-        //
+        $invoice = invoices::where('id',$id)->first();
+        $details = invoice_details::where('id_Invoice' ,$id)->get(); 
+        $attachment = invoice_attachments::where('invoice_id' ,$id)->get();
+        return view('invoices.invoices_details', compact('invoice','details','attachment'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -82,4 +88,6 @@ class InvoiceDetailsController extends Controller
     {
         //
     }
+
+
 }

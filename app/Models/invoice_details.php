@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class invoice_details extends Model
 {
     use HasFactory;
+    
+    protected $guarded = [];
+    public function section(){
+
+        return $this->belongsTo(sections::class);
+
+    }
 }

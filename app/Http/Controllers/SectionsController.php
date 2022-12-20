@@ -47,7 +47,7 @@ class SectionsController extends Controller
             
             sections::create($request->all() );
             
-            session()->flash('Add' , 'تم اضافة القسم بنجاح');
+            session()->flash('add' , 'تم اضافة القسم بنجاح');
             return redirect('/sections');
         }
 
