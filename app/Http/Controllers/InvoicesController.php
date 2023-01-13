@@ -65,7 +65,7 @@ class InvoicesController extends Controller
             'id_Invoice' => $invoice_id,
             'invoice_number' => $request->invoice_number,
             'product' => $request->product,
-            'Section_id' => $request->Section,
+            'section_id' => $request->Section,
             'Status' => 'غير مدفوعة',
             'Value_Status' => 2,
             'note' => $request->note,

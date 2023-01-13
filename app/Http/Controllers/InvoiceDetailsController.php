@@ -61,10 +61,10 @@ class InvoiceDetailsController extends Controller
      */
     public function edit($id)
     {
-        $invoice = invoices::where('id',$id)->first();
+        $invoices = invoices::where('id',$id)->first();
         $details = invoice_details::where('id_Invoice' ,$id)->get(); 
-        $attachment = invoice_attachments::where('invoice_id' ,$id)->get();
-        return view('invoices.invoices_details', compact('invoice','details','attachment'));
+        $attachments = invoice_attachments::where('invoice_id' ,$id)->get();
+        return view('invoices.invoices_details', compact('invoices','details','attachments'));
     }
     /**
      * Update the specified resource in storage.

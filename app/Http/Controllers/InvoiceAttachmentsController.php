@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\invoice_attachments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class InvoiceAttachmentsController extends Controller
 {
@@ -22,9 +25,10 @@ class InvoiceAttachmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function View_file($id , $filname)
     {
-        //
+        $files =  Storage::put('public_uploads' , $id . '/' . $filname   );
+        return response()->file($files);
     }
 
     /**
@@ -35,7 +39,23 @@ class InvoiceAttachmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image = $request->file('file_name');
+        $image_name = $image->getClientOriginalName(); 
+
+        $invoice_attachments = new invoice_attachments();
+        $invoice_attachments->file_name = $image_name;
+        $invoice_attachments->invoice_number = $request->invoice_number;
+        $invoice_attachments->invoice_id= $request->invoice_id;
+        $invoice_attachments->Created_by = Auth::user()->name;
+        $invoice_attachments->save();
+
+        // move pic
+        
+        $imageName = $request->file_name->getClientOriginalName();
+        $request->file_name->move(public_path('Attachments/' . $request->invoice_number),$imageName);
+        
+        session()->flash('add', 'تم اضافة الفاتورة بنجاح');
+        return back();
     }
 
     /**
@@ -44,9 +64,9 @@ class InvoiceAttachmentsController extends Controller
      * @param  \App\Models\invoice_attachments  $invoice_attachments
      * @return \Illuminate\Http\Response
      */
-    public function show(invoice_attachments $invoice_attachments)
+    public function download()
     {
-        //
+        return "welcom to download page";
     }
 
     /**
