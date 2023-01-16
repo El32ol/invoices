@@ -25,53 +25,20 @@
             <ul class="nav">
                 <li class="">
                      <div class="dropdown  nav-itemd-none d-md-flex">
-									<a href="locale/en" class="d-flex active  nav-item nav-link pl-0 country-flag1" data-toggle="dropdown" aria-expanded="false">
-										<span class="avatar country-Flag mr-0 align-self-center bg-transparent"><img src="{{URL::asset('assets/img/flags/us_flag.jpg')}}" alt="img"></span>
-										<div class="my-auto">
-											<strong class="mr-2 ml-2 my-auto">English</strong>
-										</div>
+									<a class="d-flex active  nav-item nav-link pl-0 country-flag1" data-toggle="dropdown" aria-expanded="false">
+										<span class="avatar mr-0 align-self-center bg-transparent"><img src="{{ asset('assets/img/flags/' . LaravelLocalization::getCurrentLocale() . '.png') }}" alt="img"></span>
 									</a>
 									<div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow" x-placement="bottom-end">
-										<a href="#" class="dropdown-item d-flex ">
-											<span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{URL::asset('assets/img/flags/french_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">French</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{URL::asset('assets/img/flags/germany_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">Germany</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar ml-3 align-self-center bg-transparent"><img src="{{URL::asset('assets/img/flags/italy_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">Italy</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar ml-3 align-self-center bg-transparent"><img src="{{URL::asset('assets/img/flags/russia_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">Russia</span>
-											</div>
-										</a>
-										<a href="#" class="dropdown-item d-flex">
-											<span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{URL::asset('assets/img/flags/spain_flag.jpg')}}" alt="img"></span>
-											<div class="d-flex">
-												<span class="mt-2">spain</span>
-											</div>
-										</a>
+                                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                            <a hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="dropdown-item d-flex ">
+                                                <span class="avatar  ml-3 align-self-center bg-transparent"><img src="{{ asset($properties['flag']) }}" alt="{{ $properties['native'] }}"></span>
+                                                <div class="d-flex">
+                                                    <span class="mt-2">{{ $properties['native'] }}</span>
+                                                </div>
+                                            </a>
+                                        @endforeach
 									</div>
 								</div>
-                {{-- <li>
-                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    <a rel="alternate" hreflang="{{ $localeCode }}"
-                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                        {{ $properties['native'] }}
-                    </a>
-                </li>
-                @endforeach --}}
                 </li>
             </ul>
             <div class="nav nav-item  navbar-nav-right ml-auto">

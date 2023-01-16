@@ -22,24 +22,30 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+], function(){
 
-Auth::routes();
-// Auth::routes(['register' => false]);
+    Route::get('/', function () {
+        return view('auth.login');
+    });
+    
+    Auth::routes();
+    // Auth::routes(['register' => false]);
+    
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+    Route::resource('invoices', InvoicesController::class);
+    Route::resource('sections', SectionsController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('InvoiceAttachments',InvoiceAttachmentsController::class);
+    Route::get('/section/{id}', [InvoicesController::class ,'getProduct']);
+    Route::get('/View_file/{id}/{filname}', [InvoiceAttachmentsController::class ,'View_file']);
+    Route::get('/download/{id}/{filname}', [InvoiceAttachmentsController::class ,'download']);
+    Route::get('/delete/{id}/{filname}', [invoice_attachments::class ,'show']);
+    Route::get('/{page}', [AdminController::class ,'index']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){
-Route::resource('invoices', InvoicesController::class);
-Route::resource('sections', SectionsController::class);
-Route::resource('products', ProductController::class);
-Route::resource('InvoiceAttachments',InvoiceAttachmentsController::class);
-Route::get('/section/{id}', [InvoicesController::class ,'getProduct']);
-Route::get('/View_file/{id}/{filname}', [InvoiceAttachmentsController::class ,'View_file']);
-Route::get('/download/{id}/{filname}', [InvoiceAttachmentsController::class ,'download']);
-Route::get('/delete/{id}/{filname}', [invoice_attachments::class ,'show']);
-Route::get('/{page}', [AdminController::class ,'index']);
+    Route::get('detailinvoices/{id}', [InvoiceDetailsController::class ,'edit'])->name('detailinvoices');
 
-Route::get('detailinvoices/{id}', [InvoiceDetailsController::class ,'edit'])->name('detailinvoices');
 });
